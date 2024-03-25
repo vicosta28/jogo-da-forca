@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Forca</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <h1>JOGO DA FORCA</h1>
+        <div id="forca"></div>
+        <div id="letras-erradas"></div>
+        <input type="text" id="addLetra" placeholder="Insira uma letra">
+        <button id="adivinhar">Adivinhar</button>
+        <div id="result"></div>
+        <button id="resetar">Reiniciar Jogo</button>
+    </div>
+   
+    <script>
+        const palavras = ["javascript", "programacao", "computador", "desenvolvimento"];
+let palavraEscolhida = palavras[Math.floor(Math.random() * palavras.length)];
+let palavraOculta = "_".repeat(palavraEscolhida.length);
+let letrasErradas = [];
+let tentativas = 5;
+
+const LetrasForca = document.getElementById("forca");
+const LetrasErradas = document.getElementById("letras-erradas");
+const AddLetra = document.getElementById("addLetra");
+const Adivinhar = document.getElementById("adivinhar");
+const result = document.getElementById("result");
+const resetarBtn = document.getElementById("resetar");
+
+function exibirPalavraOculta() {
+    forca.textContent = palavraOculta.split("").join(" ");
+}
+
+
+function verificarLetra(letra) {
+    if (palavraEscolhida.includes(letra)) {
+        for (let i = 0; i < palavraEscolhida.length; i++) {
+            if (palavraEscolhida[i] === letra) {
+                palavraOculta = palavraOculta.substring(0, i) + letra + palavraOculta.substring(i + 1);
+            }
+        }
+        exibirPalavraOculta();
+        if (!palavraOculta.includes("_")) {
+            result.textContent = "Parabéns! Você ganhou!";
+            addLetra.disabled = true;
+            Adivinhar.disabled = true;
+        }
+    } else {
+        letrasErradas.push(letra);
+        LetrasErradas.textContent = "Letras erradas: " + letrasErradas.join(", ");
+    }
+}
+
+
+function reiniciarJogo() {
+    palavraEscolhida = palavras[Math.floor(Math.random() * palavras.length)];
+    palavraOculta = "_".repeat(palavraEscolhida.length);
+    letrasErradas = [];
+    tentativas = 5;
+    exibirPalavraOculta();
+    letrasErradas.textContent = "";
+    result.textContent = "";
+    addLetra.disabled = false;
+    Adivinhar.disabled = false;
+}
+
+
+window.addEventListener("DOMContentLoaded", exibirPalavraOculta);
+
+Adivinhar.addEventListener("click", function() {
+    const letra = addLetra.value.toLowerCase();
+    if (letra && letra.length === 1 && letra.match(/[a-z]/)) {
+        if (!palavraOculta.includes(letra) && !letrasErradas.includes(letra)) {
+            verificarLetra(letra);
+        }
+    }
+    addLetra.value = "";
+});
+
+resetarBtn.addEventListener("click", reiniciarJogo);
+
+    </script>
+</body>
+</html>
