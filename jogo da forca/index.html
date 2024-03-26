@@ -14,15 +14,15 @@
         <input type="text" id="addLetra" placeholder="Insira uma letra">
         <button id="adivinhar">Adivinhar</button>
         <div id="result"></div>
-        <button id="resetar">Reiniciar Jogo</button>
+        <button id="resetar">Reiniciar Jogo</button>  
     </div>
-   
+
     <script>
-        const palavras = ["javascript", "programacao", "computador", "desenvolvimento"];
+        const palavras = ["javascript", "programacao", "computador", "desenvolvimento", "informatica", "python", "analise", "dados","celular"];
 let palavraEscolhida = palavras[Math.floor(Math.random() * palavras.length)];
 let palavraOculta = "_".repeat(palavraEscolhida.length);
 let letrasErradas = [];
-let tentativas = 5;
+let tentativas = 6;
 
 const LetrasForca = document.getElementById("forca");
 const LetrasErradas = document.getElementById("letras-erradas");
@@ -34,7 +34,6 @@ const resetarBtn = document.getElementById("resetar");
 function exibirPalavraOculta() {
     forca.textContent = palavraOculta.split("").join(" ");
 }
-
 
 function verificarLetra(letra) {
     if (palavraEscolhida.includes(letra)) {
@@ -60,7 +59,7 @@ function reiniciarJogo() {
     palavraEscolhida = palavras[Math.floor(Math.random() * palavras.length)];
     palavraOculta = "_".repeat(palavraEscolhida.length);
     letrasErradas = [];
-    tentativas = 5;
+    tentativas = 6;
     exibirPalavraOculta();
     letrasErradas.textContent = "";
     result.textContent = "";
